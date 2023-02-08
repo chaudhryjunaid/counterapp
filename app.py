@@ -1,13 +1,26 @@
-from flask import Flask
+from flask import Flask, request
 from markupsafe import escape
 
 app = Flask(__name__)
 
 
-@app.route("/<path:subpath>")
-def print_path(subpath):
-    app.logger.info("hi world! route hit!")
-    return f'Subpath {escape(subpath)}'
+counter = 0
+
+@app.route("/")
+def index():
+    return f'{counter}'
+
+@app.route("/inc")
+def inc():
+    global counter
+    counter += 1
+    return f'{counter}'
+
+@app.route("/dec")
+def dec():
+    global counter
+    counter -= 1
+    return f'{counter}'
 
 
 app.run(debug=True)
